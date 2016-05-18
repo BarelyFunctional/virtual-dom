@@ -439,12 +439,21 @@ function makeEventHandler(eventNode, info)
 			var message = value._0;
 			var options = info.options;
 
-			if (options.stopPropagation(message))
-			{
+      if (typeof options.stopPropagation === 'function') {
+				if (options.stopPropagation(message))
+				{
+					event.stopPropagation();
+				}
+			} else if (options.stopPropagation) {
 				event.stopPropagation();
 			}
-			if (options.preventDefault(message))
-			{
+
+			if (typeof options.preventDefault === 'function') {
+				if (options.preventDefault(message))
+				{
+					event.preventDefault();
+				}
+			} else if (options.preventDefault) {
 				event.preventDefault();
 			}
 

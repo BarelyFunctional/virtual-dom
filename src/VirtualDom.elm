@@ -217,6 +217,11 @@ onWithOptions : String -> Options -> Json.Decoder msg -> Property msg
 onWithOptions =
   Native.VirtualDom.on
 
+{-| Same as `on` but you can set a few options.
+-}
+onWithOptions : String -> EventOptions -> Json.Decoder msg -> Property msg
+onWithOptions =
+  Native.VirtualDom.on
 
 {-| Options for an event listener. If `stopPropagation` is true, it means the
 event stops traveling through the DOM so it will not trigger any other event
@@ -225,24 +230,40 @@ to the event is prevented. For example, this is used with touch events when you
 want to treat them as gestures of your own, not as scrolls.
 -}
 type alias Options =
+  { stopPropagation : Bool
+  , preventDefault : Bool
+  }
+
+{-| Everything is `False` by default.
+    defaultOptions =
+        { stopPropagation = False
+        , preventDefault = False
+        }
+-}
+defaultOptions : Options
+defaultOptions =
+  { stopPropagation = False
+  , preventDefault = False
+  }
+
+type alias EventOptions =
   { stopPropagation : Json.Decoder Bool
   , preventDefault : Json.Decoder Bool
   }
 
-
 {-| Everything is `False` by default.
-
-    defaultOptions =
+    defaultEventOptions =
         { stopPropagation = Json.succeed False
         , preventDefault = Json.succeed False
         }
 -}
 
-defaultOptions : Options
-defaultOptions =
+defaultEventOptions : Options
+defaultEventOptions =
   { stopPropagation = Json.succeed False
   , preventDefault = Json.succeed False
   }
+
 
 
 
