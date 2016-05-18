@@ -225,22 +225,23 @@ to the event is prevented. For example, this is used with touch events when you
 want to treat them as gestures of your own, not as scrolls.
 -}
 type alias Options =
-  { stopPropagation : Bool
-  , preventDefault : Bool
+  { stopPropagation : Json.Decoder Bool
+  , preventDefault : Json.Decoder Bool
   }
 
 
 {-| Everything is `False` by default.
 
     defaultOptions =
-        { stopPropagation = False
-        , preventDefault = False
+        { stopPropagation = Json.succeed False
+        , preventDefault = Json.succeed False
         }
 -}
+
 defaultOptions : Options
 defaultOptions =
-  { stopPropagation = False
-  , preventDefault = False
+  { stopPropagation = Json.succeed False
+  , preventDefault = Json.succeed False
   }
 
 
@@ -295,4 +296,3 @@ programWithFlags
   -> Program flags
 programWithFlags =
   Native.VirtualDom.programWithFlags
-

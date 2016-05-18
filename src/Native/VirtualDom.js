@@ -436,17 +436,17 @@ function makeEventHandler(eventNode, info)
 
 		if (value.ctor === 'Ok')
 		{
+			var message = value._0;
 			var options = info.options;
-			if (options.stopPropagation)
+
+			if (options.stopPropagation(message))
 			{
 				event.stopPropagation();
 			}
-			if (options.preventDefault)
+			if (options.preventDefault(message))
 			{
 				event.preventDefault();
 			}
-
-			var message = value._0;
 
 			var currentEventNode = eventNode;
 			while (currentEventNode)
