@@ -4,6 +4,7 @@ module VirtualDom exposing
   , Property, property, attribute, attributeNS
   , style
   , on, onWithOptions, Options, defaultOptions
+  , onWithEventOptions, EventOptions, defaultEventOptions
   , map
   , lazy, lazy2, lazy3
   , programWithFlags
@@ -22,7 +23,7 @@ that expose more helper functions for HTML or SVG.
 @docs style
 
 # Events
-@docs on, onWithOptions, Options, defaultOptions
+@docs on, onWithOptions, Options, defaultOptions, EventOptions, defaultEventOptions, onWithEventOptions
 
 # Routing Messages
 @docs map
@@ -217,11 +218,6 @@ onWithOptions : String -> Options -> Json.Decoder msg -> Property msg
 onWithOptions =
   Native.VirtualDom.on
 
-{-| Same as `on` but you can set a few options.
--}
-onWithOptions : String -> EventOptions -> Json.Decoder msg -> Property msg
-onWithOptions =
-  Native.VirtualDom.on
 
 {-| Options for an event listener. If `stopPropagation` is true, it means the
 event stops traveling through the DOM so it will not trigger any other event
@@ -234,7 +230,9 @@ type alias Options =
   , preventDefault : Bool
   }
 
+
 {-| Everything is `False` by default.
+
     defaultOptions =
         { stopPropagation = False
         , preventDefault = False
@@ -246,25 +244,23 @@ defaultOptions =
   , preventDefault = False
   }
 
+{-| A doc comment -}
 type alias EventOptions =
   { stopPropagation : Json.Decoder Bool
   , preventDefault : Json.Decoder Bool
   }
 
-{-| Everything is `False` by default.
-    defaultEventOptions =
-        { stopPropagation = Json.succeed False
-        , preventDefault = Json.succeed False
-        }
--}
+{-| A doc comment -}
+onWithEventOptions : String -> EventOptions -> Json.Decoder msg -> Property msg
+onWithEventOptions =
+  Native.VirtualDom.on
 
-defaultEventOptions : Options
+{-| A doc comment -}
+defaultEventOptions : EventOptions
 defaultEventOptions =
   { stopPropagation = Json.succeed False
   , preventDefault = Json.succeed False
   }
-
-
 
 
 -- OPTIMIZATION
